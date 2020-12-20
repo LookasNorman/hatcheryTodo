@@ -5,7 +5,7 @@ import {Typography} from '@material-ui/core';
 const useStyles = makeStyles({
     });
 
-export default function CardBody() {
+export const CardBody = () => {
     const classes = useStyles();
 
     return (

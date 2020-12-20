@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function CardHeader() {
+export const CardHeader = () => {
     const classes = useStyles();
 
     return (

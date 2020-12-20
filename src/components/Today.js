@@ -1,9 +1,9 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Card, CardContent, List} from '@material-ui/core';
-import CardHeader from './basic/CardHeader'
-import CardSubtitle from './basic/CardSubtitle'
-import ListBody from './basic/ListBody'
+import {CardHeader} from './basic/CardHeader'
+import {CardSubtitle} from './basic/CardSubtitle'
+import {ListBody} from './basic/ListBody'
 
 const useStyles = makeStyles({
     root: {
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Today({data}) {
+export const Today = ({data}) => {
     const classes = useStyles();
     return (
         // data.map((item, key) => (

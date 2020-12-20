@@ -1,5 +1,5 @@
 import './App.css';
-import Today from './components/Today'
+import {Today} from './components/Today'
 import state from './state/state'
 
 function App() {
