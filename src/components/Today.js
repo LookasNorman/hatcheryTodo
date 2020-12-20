@@ -5,29 +5,30 @@ import {CardHeader} from './basic/CardHeader'
 import {CardSubtitle} from './basic/CardSubtitle'
 import {ListBody} from './basic/ListBody'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         minWidth: 275,
     },
     title: {
         fontSize: 14,
     },
-});
+}));
 
 export const Today = ({data}) => {
     const classes = useStyles();
+
     return (
         // data.map((item, key) => (
         <Card className={classes.root}>
             <CardContent>
                 <CardHeader/>
                 <CardSubtitle/>
-                {data.map((item, key) => (
+                {data.slice(0,3).map((item, key) => (
                     <List key={key} className={classes.root}>
                         <ListBody data={item}/>
                     </List>
-                ))}
 
+                ))}
             </CardContent>
         </Card>
 // ))
