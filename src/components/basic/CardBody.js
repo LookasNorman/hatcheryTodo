@@ -7,7 +7,6 @@ const useStyles = makeStyles({
 
 export default function CardBody() {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     return (
         <Typography variant="body2" component="p">

@@ -1,38 +1,36 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {Card, CardActions, CardContent, Button} from '@material-ui/core';
+import {Card, CardContent, List} from '@material-ui/core';
 import CardHeader from './basic/CardHeader'
 import CardSubtitle from './basic/CardSubtitle'
-import CardBody from './basic/CardBody'
+import ListBody from './basic/ListBody'
 
 const useStyles = makeStyles({
     root: {
         minWidth: 275,
-    },
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
     },
     title: {
         fontSize: 14,
     },
 });
 
-export default function Today() {
+export default function Today({data}) {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
-
     return (
+        // data.map((item, key) => (
         <Card className={classes.root}>
             <CardContent>
                 <CardHeader/>
                 <CardSubtitle/>
-                <CardBody/>
+                {data.map((item, key) => (
+                    <List key={key} className={classes.root}>
+                        <ListBody data={item}/>
+                    </List>
+                ))}
+
             </CardContent>
-            <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions>
         </Card>
+// ))
+
     );
 }

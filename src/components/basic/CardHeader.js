@@ -10,11 +10,10 @@ const useStyles = makeStyles({
 
 export default function CardHeader() {
     const classes = useStyles();
-    const bull = <span className={classes.bullet}>•</span>;
 
     return (
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Word of the Day
+                    Dzisiaj
                 </Typography>
     );
 }
