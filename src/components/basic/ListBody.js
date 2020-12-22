@@ -1,29 +1,60 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {ListItem, ListItemText, ListItemSecondaryAction, IconButton} from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Typography,
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        flexBasis: '100%',
+        flexShrink: 0,
+        display: 'block'
+    },
+    list: {
+        width: '100%',
+        padding: '0 0 1vw 0',
     },
 }));
 
 export const ListBody = ({data}) => {
     const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleChange = (panel) => (event, isExpanded) => {
+        setExpanded(isExpanded ? panel : false);
+    };
 
     return (
         <>
-            <ListItem>
-                <ListItemText primary={data.title} secondary={data.date}/>
-                <ListItemSecondaryAction>
-                    <IconButton aria-label="comments">
-                        <MoreVertIcon/>
-                    </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
+            <Accordion
+                className={classes.list}
+                expanded={expanded === 'panel1'}
+                onChange={handleChange('panel1')}
+            >
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon/>}
+                    aria-controls="panel1bh-content"
+                    id="panel1bh-header"
+                >
+                    <Typography className={classes.heading}>
+                        {data.title}
+                        <br/>
+                        <Typography variant="caption">
+                            {data.date}
+                        </Typography>
+                    </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        {data.desc}
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
         </>
     );
 }
