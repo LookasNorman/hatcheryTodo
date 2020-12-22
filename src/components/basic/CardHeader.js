@@ -8,12 +8,12 @@ const useStyles = makeStyles({
     },
 });
 
-export const CardHeader = () => {
+export const CardHeader = ({data}) => {
     const classes = useStyles();
 
     return (
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    Dzisiaj
+                    {data}
                 </Typography>
     );
 }
