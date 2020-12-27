@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function App() {
+function Home() {
   const classes = useStyles()
   const [state, setState] = useState([])
   let newDate = new Date();
@@ -57,4 +57,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
