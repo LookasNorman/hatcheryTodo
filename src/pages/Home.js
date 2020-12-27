@@ -1,7 +1,6 @@
-import './App.css'
+import '../App.css'
 import { makeStyles } from '@material-ui/core/styles'
-import { TodoSummary } from './components/TodoSummary'
-// import state from './state/state'
+import { TodoSummary } from '../components/TodoSummary'
 import { useEffect, useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles()
   const [state, setState] = useState([])
-  let newDate = new Date();
   let date = '2020-12-26'
   useEffect(() => {
     const fetchData = async () => {
@@ -36,9 +34,9 @@ function Home() {
         `http://localhost:8000/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       setState([
-        { title: 'Zaległe', data: overdue },
-        { title: 'Dzisiaj', data: today },
-        { title: 'Następny tydzień', data: nextWeek}
+        { title: 'Zaległe', link: '/overdue', data: overdue },
+        { title: 'Dzisiaj', link: '/today', data: today },
+        { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek}
         ])
     }
     fetchData()
@@ -48,7 +46,6 @@ function Home() {
     <div className='App'>
       <header className={`${classes.main} ${classes.flex}`}>
         {state.map((item, key) => (
-          // console.log(item)
           <TodoSummary key={key} data={item} />
         ))}
 
