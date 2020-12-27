@@ -21,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
 function Today() {
   const classes = useStyles()
   const [state, setState] = useState([])
-  let date = '2020-12-26'
+  var today = new Date(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
     const fetchData = async () => {
       const nextWeek = await fetch(
-        `http://localhost:8000/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
+        `http://lookaskonieczny.com/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       setState([
         { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek},

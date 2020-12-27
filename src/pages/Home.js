@@ -21,17 +21,18 @@ const useStyles = makeStyles((theme) => ({
 function Home() {
   const classes = useStyles()
   const [state, setState] = useState([])
-  let date = '2020-12-26'
+  var today = new Date(),
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
     const fetchData = async () => {
       const today = await fetch(
-        `http://localhost:8000/api/todos.json?date=${date}&exists[endDate]=false`,
+        `http://lookaskonieczny.com/api/todos.json?date=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       const overdue = await fetch(
-        `http://localhost:8000/api/todos.json?date[strictly_before]=${date}&exists[endDate]=false`,
+        `http://lookaskonieczny.com/api/todos.json?date[strictly_before]=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       const nextWeek = await fetch(
-        `http://localhost:8000/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
+        `http://lookaskonieczny.com/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       setState([
         { title: 'Zaległe', link: '/overdue', data: overdue },
