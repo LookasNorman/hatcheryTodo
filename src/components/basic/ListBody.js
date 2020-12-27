@@ -51,7 +51,7 @@ export const ListBody = ({data}) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {data.desc}
+                        {data.description}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
