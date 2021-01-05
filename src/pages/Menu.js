@@ -4,16 +4,15 @@ import {Divider, List} from "@material-ui/core";
 import MenuItem from "../components/basic/MenuItem";
 import {
   Devices,
-  DevicesOther, Home,
+  DevicesOther,
+  Home,
   ListAlt,
   LocationOn,
   MeetingRoom,
+  ShoppingCart,
   Style,
-  Toc,
-  ViewList
-} from "@material-ui/icons";
-
-const drawerWidth = 240;
+  ViewList,
+} from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
@@ -31,7 +30,7 @@ export default function Menu() {
           {title: 'Strona główna', icon: <Home/>, path: '/'},
           {title: 'Zadania', icon: <ListAlt/>, path: '/zadania'},
           {title: 'Reklamacje', icon: <ViewList/>, path: '/reklamacje'},
-          {title: 'Zamówienia', icon: <Toc/>, path: '/zamowienia'},
+          {title: 'Zamówienia', icon: <ShoppingCart/>, path: '/zamowienia'},
           {title: 'Typy zadań', icon: <Style/>, path: '/typy_zadan'}
         ].map((item, index) => (
           <MenuItem key={index} item={item}/>
