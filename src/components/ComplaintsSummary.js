@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OrdersSummary = ({data}) => {
+export const ComplaintsSummary = ({data}) => {
   const classes = useStyles();
   return (
     <Card className={classes.card}>

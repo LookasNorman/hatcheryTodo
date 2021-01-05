@@ -1,9 +1,10 @@
-import React from "react";
-import {makeStyles} from '@material-ui/core/styles'
-import {TodoSummary} from '../components/TodoSummary'
-import {useEffect, useState} from 'react'
-import PartHeader from "../components/basic/PartHeader";
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { TodoSummary } from '../components/TodoSummary'
+import { useEffect, useState } from 'react'
+import PartHeader from '../components/basic/PartHeader'
 import { OrdersSummary } from '../components/OrdersSummary'
+import { ComplaintsSummary } from '../components/ComplaintsSummary'
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -24,9 +25,10 @@ export default function Dashboard() {
   const classes = useStyles()
   const [state, setState] = useState([])
   const [orders, setOrders] = useState([])
+  const [complaints, setComplaints] = useState([])
 
   var today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,9 +42,9 @@ export default function Dashboard() {
         `http://lookaskonieczny.com/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       setState([
-        {title: 'Zaległe', link: '/overdue', data: overdue},
-        {title: 'Dzisiaj', link: '/today', data: today},
-        {title: 'Następny tydzień', link: '/nextWeek', data: nextWeek}
+        { title: 'Zaległe', link: '/overdue', data: overdue },
+        { title: 'Dzisiaj', link: '/today', data: today },
+        { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek },
       ])
     }
     fetchData()
@@ -54,7 +56,19 @@ export default function Dashboard() {
         `http://lookaskonieczny.com/api/orders.json`,
       ).then(res => res.json())
       setOrders([
-        {title: 'Dzisiaj', link: '/orders', data: all},
+        { title: 'W realizacji', link: null, data: all },
+      ])
+    }
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const all = await fetch(
+        `http://lookaskonieczny.com/api/complaints.json`,
+      ).then(res => res.json())
+      setComplaints([
+        { title: 'Zgłoszone', link: null, data: all },
       ])
     }
     fetchData()
@@ -62,16 +76,19 @@ export default function Dashboard() {
 
   return (
     <>
-      <PartHeader text="Zadania"/>
+      <PartHeader text='Zadania' />
       <header className={`${classes.main} ${classes.flex}`}>
         {state.map((item, key) => (
-          <TodoSummary key={key} data={item}/>
+          <TodoSummary key={key} data={item} />
         ))}
       </header>
-      <PartHeader text="Reklamacje i zamówienia"/>
+      <PartHeader text='Reklamacje i zamówienia' />
       <header className={`${classes.main} ${classes.flex}`}>
         {orders.map((item, key) => (
-          <OrdersSummary key={key} data={item}/>
+          <OrdersSummary key={key} data={item} />
+        ))}
+        {complaints.map((item, key) => (
+          <ComplaintsSummary key={key} data={item} />
         ))}
       </header>
     </>
