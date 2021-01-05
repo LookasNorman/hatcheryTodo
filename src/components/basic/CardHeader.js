@@ -12,8 +12,8 @@ export const CardHeader = ({data}) => {
     const classes = useStyles();
 
     return (
-                <Typography className={classes.title} color="textSecondary" gutterBottom>
-                    {data}
-                </Typography>
+      <Typography className={classes.title} color="textSecondary" gutterBottom>
+          {data}
+      </Typography>
     );
 }

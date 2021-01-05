@@ -29,13 +29,14 @@ function Today() {
         `http://lookaskonieczny.com/api/todos.json?date=${date}&exists[endDate]=false`,
       ).then(res => res.json())
       setState([
-        { title: 'Dzisiaj', link: '/today', data: today },
+        { title: 'Dzisiaj', link: null, data: today },
       ])
     }
     fetchData()
   }, [])
 
   return (
+
     <div className='App'>
       <header className={`${classes.main} ${classes.flex}`}>
         {state.map((item, key) => (

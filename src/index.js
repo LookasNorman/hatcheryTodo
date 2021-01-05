@@ -1,31 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import './index.css'
-import Home from './pages/Home'
+import PageLayout from './pages/PageLayout'
 import reportWebVitals from './reportWebVitals'
-import Today from './pages/Today'
-import Overdue from './pages/Overdue'
-import NextWeek from './pages/NextWeek'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
-        <Route path='/today'>
-          <Today />
-        </Route>
-        <Route path='/overdue'>
-          <Overdue />
-        </Route>
-        <Route path='/nextWeek'>
-          <NextWeek />
-        </Route>
-      </Switch>
-    </Router>
+    <PageLayout/>
   </React.StrictMode>,
   document.getElementById('root'),
 )

@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         width: '32%',
-        minWidth: '360px',
+        minWidth: '300px',
         margin: '1vw 0',
         backgroundColor: '#eee',
         borderRadius: '0.5vw',
