@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {TodoSummary} from '../components/TodoSummary'
 import {useEffect, useState} from 'react'
 import PartHeader from "../components/basic/PartHeader";
+import { OrdersSummary } from '../components/OrdersSummary'
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles()
   const [state, setState] = useState([])
+  const [orders, setOrders] = useState([])
 
   var today = new Date(),
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -46,6 +48,18 @@ export default function Dashboard() {
     fetchData()
   }, [])
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const all = await fetch(
+        `http://lookaskonieczny.com/api/orders.json`,
+      ).then(res => res.json())
+      setOrders([
+        {title: 'Dzisiaj', link: '/orders', data: all},
+      ])
+    }
+    fetchData()
+  }, [])
+
   return (
     <>
       <PartHeader text="Zadania"/>
@@ -55,6 +69,11 @@ export default function Dashboard() {
         ))}
       </header>
       <PartHeader text="Reklamacje i zamówienia"/>
+      <header className={`${classes.main} ${classes.flex}`}>
+        {orders.map((item, key) => (
+          <OrdersSummary key={key} data={item}/>
+        ))}
+      </header>
     </>
   )
 }
