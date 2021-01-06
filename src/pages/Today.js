@@ -1,49 +1,26 @@
 import '../App.css'
-import { makeStyles } from '@material-ui/core/styles'
-import { TodoList } from '../components/TodoList'
 import { useEffect, useState } from 'react'
-
-const useStyles = makeStyles((theme) => ({
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  main: {
-    display: 'flex',
-    alignItems: 'stretch',
-    margin: '1vw 0.5vw',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-  },
-}))
+import { getTodayTodosTypesObjects } from '../api/Todos'
+import TodosPart from '../components/TodosPart'
 
 function Today() {
-  const classes = useStyles()
-  const [state, setState] = useState([])
-  var today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  const [today, setToday] = useState([])
   useEffect(() => {
+    var today = new Date(),
+      date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const fetchData = async () => {
-      const today = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      setState([
-        { title: 'Dzisiaj', link: null, data: today },
-      ])
+      const todayTodos = await await getTodayTodosTypesObjects(date)
+      if(!todayTodos.error){
+        setToday(todayTodos.data)
+      }
     }
     fetchData()
   }, [])
 
   return (
-
-    <div className='App'>
-      <header className={`${classes.main} ${classes.flex}`}>
-        {state.map((item, key) => (
-          <TodoList key={key} data={item} />
-        ))}
-      </header>
-    </div>
+    Object.entries(today).map(([key, item]) => (
+      <TodosPart key={key} data={item} title={key} />
+    ))
   )
 }
 

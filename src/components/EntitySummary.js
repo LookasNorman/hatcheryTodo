@@ -1,11 +1,11 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {makeStyles} from '@material-ui/core/styles';
-import {Card, CardContent, List, IconButton} from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {CardHeader} from './basic/CardHeader'
-import {CardSubtitle} from './basic/CardSubtitle'
-import {ListBody} from './basic/ListBody'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
+import { Card, CardContent, List, IconButton } from '@material-ui/core'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import { CardHeader } from './basic/CardHeader'
+import { CardSubtitle } from './basic/CardSubtitle'
+import { ListBody } from './basic/ListBody'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -32,10 +32,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 14,
   },
-}));
+}))
 
-export const ComplaintsSummary = ({data}) => {
-  const classes = useStyles();
+export const EntitySummary = ({ data, header }) => {
+  const classes = useStyles()
+
   return (
     <Card className={classes.card}>
       <CardContent className={classes.content}>
@@ -46,14 +47,14 @@ export const ComplaintsSummary = ({data}) => {
             <Link to={data.link}><MoreVertIcon /></Link>
           </IconButton>}
         </div>
-        <CardSubtitle/>
-        {data.data.slice(0,3).map((item, key) => (
+        <CardSubtitle header={header} />
+        {data.data.slice(0, 3).map((item, key) => (
           <List key={key}>
-            <ListBody data={item}/>
+            <ListBody data={item} />
           </List>
 
         ))}
       </CardContent>
     </Card>
-  );
+  )
 }

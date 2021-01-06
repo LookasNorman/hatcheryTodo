@@ -1,49 +1,27 @@
 import '../App.css'
-import { makeStyles } from '@material-ui/core/styles'
-import { TodoList } from '../components/TodoList'
 import { useEffect, useState } from 'react'
+import { getOverdueTodosTypesObjects } from '../api/Todos'
+import TodosPart from '../components/TodosPart'
 
-const useStyles = makeStyles((theme) => ({
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  main: {
-    display: 'flex',
-    alignItems: 'stretch',
-    margin: '1vw 0.5vw',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-  },
-}))
+function Overdue() {
+  const [overdueObjects, setOverdueObject] = useState([])
 
-function Today() {
-  const classes = useStyles()
-  const [state, setState] = useState([])
-  var today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
     const fetchData = async () => {
-      const overdue = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date[strictly_before]=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      setState([
-        { title: 'Zaległe', link: '/overdue', data: overdue },
-      ])
+      const overdueTodos = await getOverdueTodosTypesObjects()
+      if (!overdueTodos.error) {
+        setOverdueObject(overdueTodos.data)
+      }
     }
     fetchData()
+
   }, [])
 
   return (
-    <div className='App'>
-      <header className={`${classes.main} ${classes.flex}`}>
-        {state.map((item, key) => (
-          <TodoList key={key} data={item} />
-        ))}
-      </header>
-    </div>
+    Object.entries(overdueObjects).map(([key, item]) => (
+      <TodosPart key={key} data={item} title={key} />
+    ))
   )
 }
 
-export default Today
+export default Overdue
