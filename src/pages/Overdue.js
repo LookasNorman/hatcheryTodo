@@ -7,8 +7,10 @@ function Overdue() {
   const [overdueObjects, setOverdueObject] = useState([])
 
   useEffect(() => {
+    var today = new Date(),
+      date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const fetchData = async () => {
-      const overdueTodos = await getOverdueTodosTypesObjects()
+      const overdueTodos = await getOverdueTodosTypesObjects(date)
       if (!overdueTodos.error) {
         setOverdueObject(overdueTodos.data)
       }
