@@ -43,7 +43,8 @@ export const ListBody = ({data}) => {
                 id="panel1bh-header"
               >
                   <Typography variant="subtitle1" className={classes.heading}>
-                      {data.title}
+                      {data.title && data.title}
+                      {data.supplier && data.supplier}
                       <br/>
                       <Typography variant="caption">
                           {Moment(data.date).format('LL')}
