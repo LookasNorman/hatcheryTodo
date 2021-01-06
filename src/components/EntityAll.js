@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const EntitySummary = ({ data, header }) => {
+export const EntityAll = ({ data, header }) => {
   const classes = useStyles()
 
   return (
@@ -48,7 +48,7 @@ export const EntitySummary = ({ data, header }) => {
           </IconButton>}
         </div>
         <CardSubtitle header={header} />
-        {data.data.slice(0, 3).map((item, key) => (
+        {data.map((item, key) => (
           <List key={key}>
             <ListBody data={item} />
           </List>
