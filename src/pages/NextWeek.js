@@ -2,6 +2,7 @@ import '../App.css'
 import { makeStyles } from '@material-ui/core/styles'
 import { TodoList } from '../components/TodoList'
 import { useEffect, useState } from 'react'
+import { getNextWeekTodos } from '../api/Todos'
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -21,16 +22,16 @@ const useStyles = makeStyles((theme) => ({
 function Today() {
   const classes = useStyles()
   const [state, setState] = useState([])
-  var today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
+    var today = new Date(),
+      date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     const fetchData = async () => {
-      const nextWeek = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      setState([
-        { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek},
-      ])
+      const nextWeek = await getNextWeekTodos(date)
+      if (!nextWeek.error) {
+        setState([
+          { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek.data },
+        ])
+      }
     }
     fetchData()
   }, [])

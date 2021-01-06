@@ -1,49 +1,41 @@
 import '../App.css'
-import { makeStyles } from '@material-ui/core/styles'
-import { TodoList } from '../components/TodoList'
 import { useEffect, useState } from 'react'
+import { getOverdueObjectTodos, getOverdueTodos } from '../api/Todos'
+import { getObjectsAddresses } from '../api/ObjectsAddresses'
+import DashboardPart from '../components/DashbordPart'
 
-const useStyles = makeStyles((theme) => ({
-  flex: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  main: {
-    display: 'flex',
-    alignItems: 'stretch',
-    margin: '1vw 0.5vw',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-  },
-}))
+function Overdue() {
+  const [overdueObjects, setOverdueObject] = useState([])
 
-function Today() {
-  const classes = useStyles()
-  const [state, setState] = useState([])
-  var today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
+    var today = new Date(),
+      date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
     const fetchData = async () => {
-      const overdue = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date[strictly_before]=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      setState([
-        { title: 'Zaległe', link: '/overdue', data: overdue },
-      ])
+      const objectsAddresses = await getObjectsAddresses()
+      if (!objectsAddresses.error) {
+        objectsAddresses.data.map((item, key) => {
+          const fetchObjectTodos = async () => {
+            const objectOverdue = await getOverdueObjectTodos(date, item.id)
+            setOverdueObject(prevState => {
+              return [...prevState,
+                {
+                  title: item.name,
+                  data: [{ title: 'Zaległe', link: '/overdue', data: objectOverdue.data }]
+                }]
+            })
+          }
+          fetchObjectTodos()
+        })
+      }
     }
     fetchData()
   }, [])
 
   return (
-    <div className='App'>
-      <header className={`${classes.main} ${classes.flex}`}>
-        {state.map((item, key) => (
-          <TodoList key={key} data={item} />
-        ))}
-      </header>
-    </div>
+    overdueObjects.map((item, key) => (
+      <DashboardPart key={key} data={item.data} title={item.title} />
+    ))
   )
 }
 
-export default Today
+export default Overdue

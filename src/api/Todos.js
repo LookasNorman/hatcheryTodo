@@ -22,3 +22,9 @@ export async function getNextWeekTodos(date) {
   )
     .then(res => res.data))
 }
+export async function getOverdueObjectTodos(date, objectId){
+  return await resolve(axios.get(
+    `${API_URL}/todos.json?date[strictly_before]=${date}&exists[endDate]=false&objectAddress=${objectId}`
+  )
+      .then(res => res.data))
+}

@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
 function Today() {
   const classes = useStyles()
   const [state, setState] = useState([])
-  var today = new Date(),
-    date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
+    var today = new Date(),
+      date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const fetchData = async () => {
       const today = await await getTodayTodos(date)
       if(!today.error){
