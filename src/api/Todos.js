@@ -31,9 +31,9 @@ export async function getTodayTodosTypesObjects(date){
     .then(res => res.data))
 }
 
-export async function getOverdueTodosTypesObjects(){
+export async function getOverdueTodosTypesObjects(date){
   return await resolve(axios.get(
-    `${API_URL}/todos/overdue/details`,
+    `${API_URL}/todos/overdue/details/${date}`,
     {headers: {"Content-Type": "application/json"}
     })
     .then(res => res.data))
