@@ -2,6 +2,7 @@ import '../App.css'
 import { makeStyles } from '@material-ui/core/styles'
 import { TodoList } from '../components/TodoList'
 import { useEffect, useState } from 'react'
+import { getTodayTodos } from '../api/Todos'
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -25,12 +26,13 @@ function Today() {
     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   useEffect(() => {
     const fetchData = async () => {
-      const today = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      setState([
-        { title: 'Dzisiaj', link: null, data: today },
-      ])
+      const today = await await getTodayTodos(date)
+      if(!today.error){
+        setState([
+          { title: 'Dzisiaj', link: null, data: today.data },
+        ])
+      }
+
     }
     fetchData()
   }, [])
