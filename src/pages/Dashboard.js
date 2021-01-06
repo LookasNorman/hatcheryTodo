@@ -1,10 +1,11 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { TodoSummary } from '../components/TodoSummary'
+import { EntitySummary } from '../components/EntitySummary'
 import { useEffect, useState } from 'react'
 import PartHeader from '../components/basic/PartHeader'
-import { OrdersSummary } from '../components/OrdersSummary'
-import { ComplaintsSummary } from '../components/ComplaintsSummary'
+import { getNextWeekTodos, getOverdueTodos, getTodayTodos } from '../api/Todos'
+import { getComplaints } from '../api/Complaints'
+import { getOrders } from '../api/Orders'
 
 const useStyles = makeStyles((theme) => ({
   flex: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles()
-  const [state, setState] = useState([])
+  const [todos, setTodos] = useState([])
   const [orders, setOrders] = useState([])
   const [complaints, setComplaints] = useState([])
 
@@ -32,44 +33,41 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const today = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      const overdue = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date[strictly_before]=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      const nextWeek = await fetch(
-        `http://lookaskonieczny.com/api/todos.json?date[strictly_after]=${date}&exists[endDate]=false`,
-      ).then(res => res.json())
-      setState([
-        { title: 'Zaległe', link: '/overdue', data: overdue },
-        { title: 'Dzisiaj', link: '/today', data: today },
-        { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek },
-      ])
+      const today = await getTodayTodos(date)
+      const overdue = await getOverdueTodos(date)
+      const nextWeek = await getNextWeekTodos(date)
+      if(!today.error && !overdue.error && !nextWeek.error){
+        setTodos([
+          { title: 'Zaległe', link: '/overdue', data: overdue.data },
+          { title: 'Dzisiaj', link: '/today', data: today.data },
+          { title: 'Następny tydzień', link: '/nextWeek', data: nextWeek.data },
+        ])
+      }
+
     }
     fetchData()
   }, [])
 
   useEffect(() => {
     const fetchData = async () => {
-      const all = await fetch(
-        `http://lookaskonieczny.com/api/orders.json`,
-      ).then(res => res.json())
-      setOrders([
-        { title: 'W realizacji', link: null, data: all },
-      ])
+      const orders = await getOrders()
+      if(!orders.error){
+        setOrders([
+          { title: 'W realizacji', link: null, data: orders.data },
+        ])
+      }
     }
     fetchData()
   }, [])
 
   useEffect(() => {
     const fetchData = async () => {
-      const all = await fetch(
-        `http://lookaskonieczny.com/api/complaints.json`,
-      ).then(res => res.json())
-      setComplaints([
-        { title: 'Zgłoszone', link: null, data: all },
-      ])
+      const complaints = await getComplaints()
+      if(!complaints.error){
+        setComplaints([
+          { title: 'Zgłoszone', link: null, data: complaints.data },
+        ])
+      }
     }
     fetchData()
   }, [])
@@ -78,17 +76,17 @@ export default function Dashboard() {
     <>
       <PartHeader text='Zadania' />
       <header className={`${classes.main} ${classes.flex}`}>
-        {state.map((item, key) => (
-          <TodoSummary key={key} data={item} />
+        {todos.map((item, key) => (
+          <EntitySummary key={key} data={item} header="Lista zadań" />
         ))}
       </header>
       <PartHeader text='Reklamacje i zamówienia' />
       <header className={`${classes.main} ${classes.flex}`}>
         {orders.map((item, key) => (
-          <OrdersSummary key={key} data={item} />
+          <EntitySummary key={key} data={item} header="Lista zamówień"/>
         ))}
         {complaints.map((item, key) => (
-          <ComplaintsSummary key={key} data={item} />
+          <EntitySummary key={key} data={item} header="Lista reklamacji"/>
         ))}
       </header>
     </>
