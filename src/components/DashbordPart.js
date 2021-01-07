@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { EntitySummary } from './EntitySummary'
 import { CircularProgress, ListItem, ListItemText } from '@material-ui/core'
@@ -31,7 +32,7 @@ export default function DashboardPart({ title, data }) {
     <>
       <ListItem divider>
         <ListItemText primary={title} />
-        <Add />
+        <Link to="/addTodo"><Add /></Link>
         {visibility ? <Visibility onClick={toggleVisibility} /> : <VisibilityOff onClick={toggleVisibility} />}
       </ListItem>
       {visibility &&

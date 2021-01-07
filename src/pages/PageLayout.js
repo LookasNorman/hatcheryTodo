@@ -15,6 +15,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Overdue from './Overdue'
 import Today from './Today'
 import NextWeek from './NextWeek'
+import AddTodo from '../components/form/AddTodo'
 
 const drawerWidth = 240;
 
@@ -128,6 +129,9 @@ function PageLayout(props) {
             </Route>
             <Route path="/nextWeek">
               <NextWeek/>
+            </Route>
+            <Route path="/addTodo">
+              <AddTodo/>
             </Route>
           </Switch>
         </main>
