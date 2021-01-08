@@ -55,9 +55,9 @@ export default function Dashboard() {
 
   return (
     <>
-      <DashboardPart title="Zadania" data={todos}/>
-      <DashboardPart title="Zamówienia" data={orders}/>
-      <DashboardPart title="Reklamacje" data={complaints}/>
+      <DashboardPart title="Zadania" data={todos} link="/addTodo"/>
+      <DashboardPart title="Zamówienia" data={orders} link="/addOrder"/>
+      <DashboardPart title="Reklamacje" data={complaints} link="/addComplaint"/>
     </>
   )
 }
