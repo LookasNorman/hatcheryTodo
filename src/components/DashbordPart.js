@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function DashboardPart({ title, data }) {
+export default function DashboardPart({ title, data, link }) {
   const classes = useStyles()
   const [visibility, setVisibility] = useState(true)
 
@@ -32,7 +32,7 @@ export default function DashboardPart({ title, data }) {
     <>
       <ListItem divider>
         <ListItemText primary={title} />
-        <Link to="/addTodo"><Add /></Link>
+        <Link to={link}><Add /></Link>
         {visibility ? <Visibility onClick={toggleVisibility} /> : <VisibilityOff onClick={toggleVisibility} />}
       </ListItem>
       {visibility &&

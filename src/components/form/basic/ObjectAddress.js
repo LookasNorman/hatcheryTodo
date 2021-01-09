@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, CardContent, Card } from '@material-ui/core'
 import { CardHeader } from '../../basic/CardHeader'
+import { newObjectAddress } from '../../../api/ObjectsAddresses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,10 +38,18 @@ const useStyles = makeStyles((theme) => ({
 export default function ObjectAddress() {
   const classes = useStyles();
   const { handleSubmit, control } = useForm()
-  const onSubmit = data => console.log(data)
+  const onSubmit = async (data) => {
+    console.log(JSON.stringify(data))
+    const newObject = await newObjectAddress(JSON.stringify(data))
+      if(newObject.error) {
+        console.log(newObject.error)
+      } else {
+        console.log(newObject.data)
+      }
+  }
 
   return (
-    <Card className={classes.card}>
+    <Card id="object-address-add" className={classes.card}>
       <CardContent className={classes.content}>
         <div className={`${classes.details} ${classes.flex}`}>
           <CardHeader data="Dodaj lokalizację" />

@@ -1,9 +1,8 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, InputLabel, MenuItem, Select, Button, CardContent, Card } from '@material-ui/core'
+import { TextField, Button, CardContent, Card, InputLabel, Select, MenuItem } from '@material-ui/core'
 import { CardHeader } from '../../basic/CardHeader'
-import { Add } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Todo() {
+export default function Complaint() {
   const classes = useStyles();
   const { handleSubmit, control } = useForm()
   const onSubmit = data => console.log(data)
@@ -44,16 +43,29 @@ export default function Todo() {
     <Card className={classes.card}>
       <CardContent className={classes.content}>
         <div className={`${classes.details} ${classes.flex}`}>
-          <CardHeader data="Dodaj zadanie" />
+          <CardHeader data="Dodaj halę / kurnik" />
         </div>
         <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name="title"
+            name="partName"
             control={control}
             defaultValue=""
             render={({ onChange, value }) => <TextField
               id="standard-basic"
-              label="Nazwa"
+              label="Nazwa części"
+              onChange={onChange} value={value}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />}
+          />
+          <Controller
+            name="supplier"
+            control={control}
+            defaultValue=""
+            render={({ onChange, value }) => <TextField
+              id="standard-basic"
+              label="Dostawca"
               onChange={onChange} value={value}
               InputLabelProps={{
                 shrink: true,
@@ -74,50 +86,18 @@ export default function Todo() {
             />}
           />
           <Controller
-            name="date"
+            name="filingDate"
             control={control}
             defaultValue=""
             render={({ onChange, value }) => <TextField
               id="standard-basic"
-              label="Data"
+              label="Data zgłoszenia"
               type="date"
               onChange={onChange} value={value}
               InputLabelProps={{
                 shrink: true,
               }}
             />}
-          />
-          <Controller
-            name="repeatTime"
-            control={control}
-            defaultValue=""
-            render={({ onChange, value }) => <TextField
-              id="standard-basic"
-              label="Czas powtórzeń (dni)"
-              type="number"
-              onChange={onChange} value={value}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />}
-          />
-          <Controller
-            name="objectAddress"
-            control={control}
-            defaultValue=""
-            render={({ onChange, value }) => <>
-              <InputLabel id="demo-simple-select-label">Lokalizacja</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="objectAddress"
-                onChange={onChange}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </>}
           />
           <Controller
             name="machine"
@@ -137,30 +117,11 @@ export default function Todo() {
               </Select>
             </>}
           />
-          <Controller
-            name="todoType"
-            control={control}
-            defaultValue=""
-            render={({ onChange, value }) => <>
-              <InputLabel id="demo-simple-select-label">Typ zadania</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="setTodoType"
-                onChange={onChange}
-              >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </>}
-          />
           <Button variant="contained" color="primary" type="submit">
             Send
           </Button>
         </form>
       </CardContent>
     </Card>
-
   );
 }
