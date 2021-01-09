@@ -49,7 +49,7 @@ export default function ObjectAddress() {
   }
 
   return (
-    <Card className={classes.card}>
+    <Card id="object-address-add" className={classes.card}>
       <CardContent className={classes.content}>
         <div className={`${classes.details} ${classes.flex}`}>
           <CardHeader data="Dodaj lokalizację" />
