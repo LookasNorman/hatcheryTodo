@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, CardContent, Card, InputLabel, Select, MenuItem } from '@material-ui/core'
 import { CardHeader } from '../../basic/CardHeader'
+import { getObjectsAddresses } from '../../../api/ObjectsAddresses'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,17 @@ export default function Hall() {
   const classes = useStyles();
   const { handleSubmit, control } = useForm()
   const onSubmit = data => console.log(data)
+  const [objectAddressList, setObjectAddressList] = useState()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const objectAddress = await getObjectsAddresses()
+      if(!objectAddress.error){
+        setObjectAddressList(objectAddress.data)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <Card className={classes.card}>
@@ -84,9 +96,9 @@ export default function Hall() {
                 name="objectAddress"
                 onChange={onChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {objectAddressList && objectAddressList.map((item) => (
+                  <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
+                ))}
               </Select>
             </>}
           />
