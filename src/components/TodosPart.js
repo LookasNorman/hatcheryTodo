@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { EntityAll } from './EntityAll'
 import { CircularProgress, ListItem, ListItemText } from '@material-ui/core'
@@ -26,12 +27,11 @@ export default function TodosPart({ title, data }) {
   const toggleVisibility = () => {
     setVisibility(!visibility)
   }
-
   return (
     <>
       <ListItem divider>
         <ListItemText primary={title} />
-        <Add />
+        <Link to="/addTodo"><Add /></Link>
         {visibility ? <Visibility onClick={toggleVisibility} /> : <VisibilityOff onClick={toggleVisibility} />}
       </ListItem>
       {visibility &&

@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const EntityAll = ({ data, header }) => {
   const classes = useStyles()
+  console.log(data)
 
   return (
     <Card className={classes.card}>

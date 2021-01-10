@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, CardContent, Card, InputLabel, Select, MenuItem } from '@material-ui/core'
 import { CardHeader } from '../../basic/CardHeader'
+import { getMachines } from '../../../api/Machines'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,13 +38,24 @@ const useStyles = makeStyles((theme) => ({
 export default function Complaint() {
   const classes = useStyles();
   const { handleSubmit, control } = useForm()
+  const [machineList, setMachineList] = useState()
   const onSubmit = data => console.log(data)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const machines = await getMachines()
+      if (!machines.error) {
+        setMachineList(machines.data)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <Card className={classes.card}>
       <CardContent className={classes.content}>
         <div className={`${classes.details} ${classes.flex}`}>
-          <CardHeader data="Dodaj halę / kurnik" />
+          <CardHeader data="Dodaj reklamację" />
         </div>
         <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Controller
@@ -111,9 +123,9 @@ export default function Complaint() {
                 name="objectAddress"
                 onChange={onChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {machineList && machineList.map((item) => (
+                  <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
+                ))}
               </Select>
             </>}
           />

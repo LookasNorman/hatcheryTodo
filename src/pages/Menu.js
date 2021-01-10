@@ -28,7 +28,7 @@ export default function Menu() {
       <List>
         {[
           {title: 'Strona główna', icon: <Home/>, path: '/'},
-          {title: 'Zadania', icon: <ListAlt/>, path: '/zadania'},
+          {title: 'Zadania', icon: <ListAlt/>, path: '/todos'},
           {title: 'Reklamacje', icon: <ViewList/>, path: '/reklamacje'},
           {title: 'Zamówienia', icon: <ShoppingCart/>, path: '/zamowienia'},
           {title: 'Typy zadań', icon: <Style/>, path: '/typy_zadan'}
