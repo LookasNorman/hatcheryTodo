@@ -9,6 +9,20 @@ export async function getTodayTodos(date) {
     .then(res => res.data))
 }
 
+export async function getObjectTodos(objectAddress) {
+  return await resolve(axios.get(
+    `${API_URL}/todos.json?exist[endDate]=false&objectAddress=${objectAddress}`
+  )
+    .then(res => res.data))
+}
+
+export async function getTodosByObjectAndType() {
+  return await resolve(axios.get(
+    `${API_URL}/todos/object/details`
+  )
+    .then(res => res.data))
+}
+
 export async function getOverdueTodos(date) {
   return await resolve(axios.get(
     `${API_URL}/todos.json?date[strictly_before]=${date}&exists[endDate]=false`

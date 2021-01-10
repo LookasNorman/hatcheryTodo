@@ -18,6 +18,7 @@ import NextWeek from './NextWeek'
 import AddTodo from './AddTodo'
 import AddOrder from './AddOrder'
 import AddComplaint from './AddComplaint'
+import Todos from './Todos'
 
 const drawerWidth = 240;
 
@@ -140,6 +141,9 @@ function PageLayout(props) {
             </Route>
             <Route path="/addComplaint">
               <AddComplaint/>
+            </Route>
+            <Route path="/todos">
+              <Todos/>
             </Route>
           </Switch>
         </main>
